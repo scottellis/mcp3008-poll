@@ -190,7 +190,7 @@ int loop(int delay_us, int *list)
         if (list[i]) {
             fd[i] = open_adc(i);
 
-            if (!fd[i])
+            if (fd[i] < 0)
                 goto loop_done;
         }
     }
@@ -238,7 +238,7 @@ int loop(int delay_us, int *list)
 loop_done:
 
     for (i = 0; i < MAX_ADC; i++) {
-        if (fd[i])
+        if (fd[i] > 0)
             close(fd[i]);
     }
 
